@@ -16,16 +16,34 @@
 #
 import webapp2, random
 
+def getRandomFortune():
+
+    fortunes = [
+        "You will do well.",
+        "You will do bad.",
+        "Eh."
+                ]
+    return random.choice(fortunes)
+
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         header = "<h1>Fortune Cookie</h1>"
 
+        fortune = getRandomFortune()
+        fortune_sentence = "Your fortune: " + fortune
+        fortune_paragraph = "<p>" + fortune_sentence + "</p>"
+
         lucky_number = random.choice(range(1,100))
         number_sentence = 'Your lucky number is: ' + str(lucky_number)
         number_paragraph = "<p>" + number_sentence + "</p>"
+
         button_label = "Get a new number."
-        button = "<button>" + button_label + "</button>"
-        self.response.write(header + number_paragraph + button)
+        button = "<button>" + "<a href='.'>" + button_label + "</a>"+ "</button>"
+
+        content = header + fortune_paragraph + number_paragraph + button
+
+        self.response.write(content)
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
